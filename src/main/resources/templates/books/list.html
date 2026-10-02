@@ -100,8 +100,17 @@
                         <tbody>
                         <tr th:each="b : ${books}">
                             <td class="title-cell">
-                                <a th:href="@{/books/{id}(id=${b.bookId})}" th:text="${b.title}">Title</a><br>
-                                <small th:text="${b.authorNames.isEmpty() ? 'Unknown author' : b.authorNames}">Author</small>
+                                <div class="d-flex align-items-center gap-3">
+                                    <a th:href="@{/books/{id}(id=${b.bookId})}" tabindex="-1" aria-hidden="true">
+                                        <img th:if="${@covers.has(b.bookId)}" class="bh-thumb" alt=""
+                                             th:src="@{/covers/{id}.svg(id=${b.bookId})}">
+                                        <span th:unless="${@covers.has(b.bookId)}" class="bh-thumb"></span>
+                                    </a>
+                                    <div>
+                                        <a th:href="@{/books/{id}(id=${b.bookId})}" th:text="${b.title}">Title</a><br>
+                                        <small th:text="${b.authorNames.isEmpty() ? 'Unknown author' : b.authorNames}">Author</small>
+                                    </div>
+                                </div>
                             </td>
                             <td><span class="bh-chip" th:text="${b.category}">Category</span></td>
                             <td>

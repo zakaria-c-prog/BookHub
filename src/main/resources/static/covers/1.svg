@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" width="400" height="600">
+<defs>
+  <linearGradient id="spine" x1="0" x2="1" y1="0" y2="0">
+    <stop offset="0" stop-color="#000" stop-opacity=".42"/>
+    <stop offset=".5" stop-color="#000" stop-opacity=".10"/>
+    <stop offset=".72" stop-color="#fff" stop-opacity=".14"/>
+    <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#fff" stop-opacity=".06"/>
+    <stop offset=".5" stop-color="#fff" stop-opacity="0"/>
+    <stop offset="1" stop-color="#000" stop-opacity=".12"/>
+  </linearGradient>
+  <radialGradient id="vignette" cx=".55" cy=".45" r=".75">
+    <stop offset=".6" stop-color="#000" stop-opacity="0"/>
+    <stop offset="1" stop-color="#000" stop-opacity=".28"/>
+  </radialGradient>
+  <filter id="paper" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="3" seed="7" stitchTiles="stitch"/>
+    <feColorMatrix type="matrix" values="0 0 0 0 .5  0 0 0 0 .45  0 0 0 0 .4  0 0 0 -1.6 1.15"/>
+  </filter>
+  <filter id="fibres" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency=".012 .35" numOctaves="2" seed="3"/>
+    <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 -.45"/>
+  </filter>
+</defs>
+
+<defs><linearGradient id="bg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#173029"/><stop offset="1" stop-color="#0b1713"/></linearGradient></defs>
+<rect width="400" height="600" fill="url(#bg1)"/>
+<g opacity=".07" font-family="Consolas, monospace" font-size="13" fill="#9cc9b0">
+  <text x="40" y="250">expr := term ('+' term)*</text><text x="40" y="270">term := factor ('*' factor)*</text>
+  <text x="40" y="560">lex → parse → emit</text>
+</g>
+<line x1="200" y1="300" x2="125" y2="365" stroke="#9cc9b0" stroke-opacity=".55" stroke-width="2"/><line x1="200" y1="300" x2="275" y2="365" stroke="#9cc9b0" stroke-opacity=".55" stroke-width="2"/><line x1="125" y1="365" x2="80" y2="430" stroke="#9cc9b0" stroke-opacity=".55" stroke-width="2"/><line x1="125" y1="365" x2="165" y2="430" stroke="#9cc9b0" stroke-opacity=".55" stroke-width="2"/><line x1="275" y1="365" x2="240" y2="430" stroke="#9cc9b0" stroke-opacity=".55" stroke-width="2"/><line x1="275" y1="365" x2="315" y2="430" stroke="#9cc9b0" stroke-opacity=".55" stroke-width="2"/><line x1="165" y1="430" x2="140" y2="495" stroke="#9cc9b0" stroke-opacity=".55" stroke-width="2"/><line x1="165" y1="430" x2="195" y2="495" stroke="#9cc9b0" stroke-opacity=".55" stroke-width="2"/><circle cx="200" cy="300" r="17" fill="#d9a55a" stroke="#9cc9b0" stroke-width="2.5"/><circle cx="125" cy="365" r="13" fill="#10201b" stroke="#9cc9b0" stroke-width="2.5"/><circle cx="275" cy="365" r="13" fill="#10201b" stroke="#9cc9b0" stroke-width="2.5"/><circle cx="80" cy="430" r="13" fill="#10201b" stroke="#9cc9b0" stroke-width="2.5"/><text x="80" y="434" font-family="Consolas, monospace" font-size="11" fill="#9cc9b0" text-anchor="middle">id</text><circle cx="165" cy="430" r="13" fill="#10201b" stroke="#9cc9b0" stroke-width="2.5"/><circle cx="240" cy="430" r="13" fill="#10201b" stroke="#9cc9b0" stroke-width="2.5"/><text x="240" y="434" font-family="Consolas, monospace" font-size="11" fill="#9cc9b0" text-anchor="middle">num</text><circle cx="315" cy="430" r="13" fill="#10201b" stroke="#9cc9b0" stroke-width="2.5"/><text x="315" y="434" font-family="Consolas, monospace" font-size="11" fill="#9cc9b0" text-anchor="middle">;</text><circle cx="140" cy="495" r="13" fill="#10201b" stroke="#9cc9b0" stroke-width="2.5"/><text x="140" y="499" font-family="Consolas, monospace" font-size="11" fill="#9cc9b0" text-anchor="middle">+</text><circle cx="195" cy="495" r="13" fill="#10201b" stroke="#9cc9b0" stroke-width="2.5"/><text x="195" y="499" font-family="Consolas, monospace" font-size="11" fill="#9cc9b0" text-anchor="middle">x</text>
+<text x="44" y="66" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#9cc9b0" text-anchor="start" letter-spacing="3">COMPUTER SCIENCE</text>
+<text x="42" y="128.0" font-family="Georgia, 'Times New Roman', serif" font-size="46" font-weight="700" fill="#f4f1e8" text-anchor="start" letter-spacing="0">Compilers</text>
+<text x="42" y="177.7" font-family="Georgia, 'Times New Roman', serif" font-size="46" font-weight="700" fill="#f4f1e8" text-anchor="start" letter-spacing="0">Without Fear</text>
+<rect x="44" y="200" width="56" height="4" fill="#d9a55a"/>
+<text x="44" y="566" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" fill="#d9e8e0" text-anchor="start" letter-spacing="3">GRACE HOPKINS</text>
+
+<rect width="400" height="600" filter="url(#fibres)" opacity=".18"/>
+<rect width="400" height="600" filter="url(#paper)" opacity=".22"/>
+<rect width="400" height="600" fill="url(#vignette)"/>
+<rect width="400" height="600" fill="url(#sheen)"/>
+<rect width="26" height="600" fill="url(#spine)"/>
+<rect x="21" width="1.6" height="600" fill="#000" opacity=".28"/>
+<rect x="23" width="1.2" height="600" fill="#fff" opacity=".12"/>
+<rect x=".5" y=".5" width="399" height="599" fill="none" stroke="#fff" stroke-opacity=".07"/>
+<g opacity=".75"><circle cx="366" cy="562" r="11" fill="none" stroke="#d9e8e0" stroke-width="1.4"/><text x="366" y="566.5" font-family="Georgia, 'Times New Roman', serif" font-size="12" font-weight="700" fill="#d9e8e0" text-anchor="middle">Y</text></g>
+</svg>

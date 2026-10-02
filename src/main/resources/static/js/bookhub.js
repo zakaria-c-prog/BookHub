@@ -29,13 +29,8 @@ document.querySelectorAll('[data-price-mode]').forEach(function (radio) {
 (function () {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Faint grid behind the page
-    const grid = document.createElement('div');
-    grid.className = 'bh-grid-bg';
-    document.body.prepend(grid);
-
     // Staggered entrance for the page header, cards and alerts
-    document.querySelectorAll('main .bh-page-head, main .breadcrumb, main .bh-card, main > h2')
+    document.querySelectorAll('main .bh-page-head, main .bh-card, main > h2')
         .forEach(function (el, i) {
             el.classList.add('bh-reveal');
             el.style.setProperty('--i', Math.min(i, 12));
@@ -48,30 +43,6 @@ document.querySelectorAll('[data-price-mode]').forEach(function (radio) {
         window.addEventListener('scroll', onScroll, { passive: true });
         onScroll();
     }
-
-    // Cursor spotlight on cards
-    document.addEventListener('pointermove', function (event) {
-        const card = event.target.closest && event.target.closest('.bh-card');
-        if (!card) return;
-        const box = card.getBoundingClientRect();
-        card.style.setProperty('--mx', (event.clientX - box.left) + 'px');
-        card.style.setProperty('--my', (event.clientY - box.top) + 'px');
-    }, { passive: true });
-
-    // Ripple on button press
-    document.addEventListener('pointerdown', function (event) {
-        const btn = event.target.closest && event.target.closest('.btn');
-        if (!btn || btn.disabled || reduceMotion) return;
-        const box = btn.getBoundingClientRect();
-        const size = Math.max(box.width, box.height);
-        const ripple = document.createElement('span');
-        ripple.className = 'bh-ripple';
-        ripple.style.width = ripple.style.height = size + 'px';
-        ripple.style.left = (event.clientX - box.left - size / 2) + 'px';
-        ripple.style.top = (event.clientY - box.top - size / 2) + 'px';
-        btn.appendChild(ripple);
-        ripple.addEventListener('animationend', function () { ripple.remove(); });
-    });
 
     // Count the dashboard numbers up from zero, keeping any prefix like "¥"
     if (!reduceMotion) {

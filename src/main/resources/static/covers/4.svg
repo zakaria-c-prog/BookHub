@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" width="400" height="600">
+<defs>
+  <linearGradient id="spine" x1="0" x2="1" y1="0" y2="0">
+    <stop offset="0" stop-color="#000" stop-opacity=".42"/>
+    <stop offset=".5" stop-color="#000" stop-opacity=".10"/>
+    <stop offset=".72" stop-color="#fff" stop-opacity=".14"/>
+    <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#fff" stop-opacity=".06"/>
+    <stop offset=".5" stop-color="#fff" stop-opacity="0"/>
+    <stop offset="1" stop-color="#000" stop-opacity=".12"/>
+  </linearGradient>
+  <radialGradient id="vignette" cx=".55" cy=".45" r=".75">
+    <stop offset=".6" stop-color="#000" stop-opacity="0"/>
+    <stop offset="1" stop-color="#000" stop-opacity=".28"/>
+  </radialGradient>
+  <filter id="paper" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="3" seed="28" stitchTiles="stitch"/>
+    <feColorMatrix type="matrix" values="0 0 0 0 .5  0 0 0 0 .45  0 0 0 0 .4  0 0 0 -1.6 1.15"/>
+  </filter>
+  <filter id="fibres" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency=".012 .35" numOctaves="2" seed="12"/>
+    <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 -.45"/>
+  </filter>
+</defs>
+
+<defs><linearGradient id="bg4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22303f"/><stop offset="1" stop-color="#121a24"/></linearGradient></defs>
+<rect width="400" height="600" fill="url(#bg4)"/>
+<g stroke="#7fb0aa" stroke-width="2" stroke-dasharray="6 6" opacity=".7">
+  <line x1="200" y1="380" x2="105" y2="440"/><line x1="200" y1="380" x2="295" y2="440"/><line x1="105" y1="470" x2="295" y2="470"/>
+</g>
+<path d="M132,285 v90 a68,21.76 0 0 0 136,0 v-90" fill="#94603b"/><path d="M132,315.0 a68,21.76 0 0 0 136,0" fill="none" stroke="#d39a6a" stroke-opacity=".5" stroke-width="2"/><path d="M132,345.0 a68,21.76 0 0 0 136,0" fill="none" stroke="#d39a6a" stroke-opacity=".5" stroke-width="2"/><ellipse cx="200" cy="285" rx="68" ry="21.76" fill="#d39a6a"/>
+<path d="M59,430 v62 a46,14.72 0 0 0 92,0 v-62" fill="#3f6f6a"/><path d="M59,450.6666666666667 a46,14.72 0 0 0 92,0" fill="none" stroke="#7fb0aa" stroke-opacity=".5" stroke-width="2"/><path d="M59,471.3333333333333 a46,14.72 0 0 0 92,0" fill="none" stroke="#7fb0aa" stroke-opacity=".5" stroke-width="2"/><ellipse cx="105" cy="430" rx="46" ry="14.72" fill="#7fb0aa"/>
+<path d="M249,430 v62 a46,14.72 0 0 0 92,0 v-62" fill="#3f6f6a"/><path d="M249,450.6666666666667 a46,14.72 0 0 0 92,0" fill="none" stroke="#7fb0aa" stroke-opacity=".5" stroke-width="2"/><path d="M249,471.3333333333333 a46,14.72 0 0 0 92,0" fill="none" stroke="#7fb0aa" stroke-opacity=".5" stroke-width="2"/><ellipse cx="295" cy="430" rx="46" ry="14.72" fill="#7fb0aa"/>
+<circle cx="200" cy="530" r="4" fill="#7fb0aa"/><circle cx="220" cy="530" r="4" fill="#d39a6a"/><circle cx="180" cy="530" r="4" fill="#d39a6a"/>
+<text x="42" y="62" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#7fb0aa" text-anchor="start" letter-spacing="3">COMPUTER SCIENCE</text>
+<text x="40" y="116.0" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="40" font-weight="800" fill="#ffffff" text-anchor="start" letter-spacing="0">Designing</text>
+<text x="40" y="158.0" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="40" font-weight="800" fill="#ffffff" text-anchor="start" letter-spacing="0">Data-Heavy</text>
+<text x="40" y="200.0" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="40" font-weight="800" fill="#ffffff" text-anchor="start" letter-spacing="0">Services</text>
+<text x="42" y="572" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" fill="#e5d6c4" text-anchor="start" letter-spacing="3">LARS ERIKSSON</text>
+
+<rect width="400" height="600" filter="url(#fibres)" opacity=".18"/>
+<rect width="400" height="600" filter="url(#paper)" opacity=".22"/>
+<rect width="400" height="600" fill="url(#vignette)"/>
+<rect width="400" height="600" fill="url(#sheen)"/>
+<rect width="26" height="600" fill="url(#spine)"/>
+<rect x="21" width="1.6" height="600" fill="#000" opacity=".28"/>
+<rect x="23" width="1.2" height="600" fill="#fff" opacity=".12"/>
+<rect x=".5" y=".5" width="399" height="599" fill="none" stroke="#fff" stroke-opacity=".07"/>
+<g opacity=".75"><circle cx="366" cy="562" r="11" fill="none" stroke="#e5d6c4" stroke-width="1.4"/><text x="366" y="566.5" font-family="Georgia, 'Times New Roman', serif" font-size="12" font-weight="700" fill="#e5d6c4" text-anchor="middle">P</text></g>
+</svg>

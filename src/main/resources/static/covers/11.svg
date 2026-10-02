@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" width="400" height="600">
+<defs>
+  <linearGradient id="spine" x1="0" x2="1" y1="0" y2="0">
+    <stop offset="0" stop-color="#000" stop-opacity=".42"/>
+    <stop offset=".5" stop-color="#000" stop-opacity=".10"/>
+    <stop offset=".72" stop-color="#fff" stop-opacity=".14"/>
+    <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#fff" stop-opacity=".06"/>
+    <stop offset=".5" stop-color="#fff" stop-opacity="0"/>
+    <stop offset="1" stop-color="#000" stop-opacity=".12"/>
+  </linearGradient>
+  <radialGradient id="vignette" cx=".55" cy=".45" r=".75">
+    <stop offset=".6" stop-color="#000" stop-opacity="0"/>
+    <stop offset="1" stop-color="#000" stop-opacity=".28"/>
+  </radialGradient>
+  <filter id="paper" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="3" seed="77" stitchTiles="stitch"/>
+    <feColorMatrix type="matrix" values="0 0 0 0 .5  0 0 0 0 .45  0 0 0 0 .4  0 0 0 -1.6 1.15"/>
+  </filter>
+  <filter id="fibres" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency=".012 .35" numOctaves="2" seed="33"/>
+    <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 -.45"/>
+  </filter>
+</defs>
+
+<defs><marker id="arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#fff"/></marker></defs>
+<rect width="400" height="600" fill="#1b4950"/>
+<rect x="52" y="480" width="19" height="40" rx="3" fill="#e3c27a"/><rect x="77" y="458" width="19" height="62" rx="3" fill="#dfb671"/><rect x="102" y="436" width="19" height="84" rx="3" fill="#dbaa68"/><rect x="127" y="414" width="19" height="106" rx="3" fill="#d79d60"/><rect x="152" y="392" width="19" height="128" rx="3" fill="#d29158"/><rect x="177" y="370" width="19" height="150" rx="3" fill="#cc8451"/><rect x="202" y="282" width="19" height="238" rx="3" fill="#a4533f" stroke="#fff" stroke-width="2.5"/><rect x="227" y="326" width="19" height="194" rx="3" fill="#bb6b46"/><rect x="252" y="304" width="19" height="216" rx="3" fill="#b05f42"/><rect x="277" y="348" width="19" height="172" rx="3" fill="#c4784b" stroke="#fff" stroke-width="2.5"/><rect x="302" y="260" width="19" height="260" rx="3" fill="#97483c"/><rect x="327" y="238" width="19" height="282" rx="3" fill="#893e39"/><path d="M211,268 Q248.5,222 286,334" stroke="#fff" stroke-width="2.5" fill="none" marker-end="url(#arr)"/>
+<rect x="40" y="520" width="320" height="3" fill="#e6f1f2" opacity=".6"/>
+<text x="42" y="62" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#e3c27a" text-anchor="start" letter-spacing="3">COMPUTER SCIENCE</text>
+<text x="40" y="112.0" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="24" font-weight="500" fill="#e6f1f2" text-anchor="start" letter-spacing="0">Introduction to</text>
+<text x="38" y="160.0" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="50" font-weight="800" fill="#ffffff" text-anchor="start" letter-spacing="0">Algorithms</text>
+<text x="40" y="204.0" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="400" fill="#e3c27a" text-anchor="start" letter-spacing="0" font-style="italic">Visualised</text>
+<text x="42" y="566" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#e6f1f2" text-anchor="start" letter-spacing="2">GRACE HOPKINS · WEI JIANGUO</text>
+
+<rect width="400" height="600" filter="url(#fibres)" opacity=".18"/>
+<rect width="400" height="600" filter="url(#paper)" opacity=".22"/>
+<rect width="400" height="600" fill="url(#vignette)"/>
+<rect width="400" height="600" fill="url(#sheen)"/>
+<rect width="26" height="600" fill="url(#spine)"/>
+<rect x="21" width="1.6" height="600" fill="#000" opacity=".28"/>
+<rect x="23" width="1.2" height="600" fill="#fff" opacity=".12"/>
+<rect x=".5" y=".5" width="399" height="599" fill="none" stroke="#fff" stroke-opacity=".07"/>
+<g opacity=".75"><circle cx="366" cy="562" r="11" fill="none" stroke="#e6f1f2" stroke-width="1.4"/><text x="366" y="566.5" font-family="Georgia, 'Times New Roman', serif" font-size="12" font-weight="700" fill="#e6f1f2" text-anchor="middle">Y</text></g>
+</svg>
