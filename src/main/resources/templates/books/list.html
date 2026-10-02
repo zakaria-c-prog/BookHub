@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Catalogue')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar('books')}"></nav>
+
+<main class="container py-4">
+    <div class="bh-page-head d-flex flex-wrap justify-content-between align-items-end gap-3">
+        <div>
+            <h1 class="mb-1">Catalogue</h1>
+            <p class="lead">Combine any of the filters to look up books.</p>
+        </div>
+        <a th:href="@{/books/new}" class="btn btn-bh"><i class="bi bi-plus-lg"></i> New book</a>
+    </div>
+
+    <div th:replace="~{fragments/layout :: flash}"></div>
+
+    <div class="row g-4">
+        <!-- filters -->
+        <aside class="col-lg-3">
+            <form th:action="@{/books}" th:object="${criteria}" method="get" class="bh-card p-3 bh-filter">
+                <div class="mb-3">
+                    <label for="keyword" class="form-label">Title or ISBN</label>
+                    <input th:field="*{keyword}" type="search" class="form-control" placeholder="e.g. design">
+                </div>
+                <div class="mb-3">
+                    <label for="author" class="form-label">Author</label>
+                    <input th:field="*{author}" type="search" class="form-control" placeholder="e.g. Wei">
+                </div>
+                <div class="mb-3">
+                    <label for="providerId" class="form-label">Provider</label>
+                    <select th:field="*{providerId}" class="form-select">
+                        <option value="">Any provider</option>
+                        <option th:each="p : ${providers}" th:value="${p.providerId}" th:text="${p.companyName}">P</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="category" class="form-label">Category</label>
+                    <select th:field="*{category}" class="form-select">
+                        <option value="">Any category</option>
+                        <option th:each="c : ${categories}" th:value="${c}" th:text="${c}">C</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Price range (¥)</label>
+                    <div class="input-group">
+                        <input th:field="*{minPrice}" type="number" step="0.01" min="0" class="form-control" placeholder="min">
+                        <span class="input-group-text">–</span>
+                        <input th:field="*{maxPrice}" type="number" step="0.01" min="0" class="form-control" placeholder="max">
+                    </div>
+                </div>
+                <div class="form-check mb-3">
+                    <input th:field="*{inStockOnly}" type="checkbox" class="form-check-input">
+                    <label th:for="${#ids.prev('inStockOnly')}" class="form-check-label">Only books in stock</label>
+                </div>
+                <div class="mb-3">
+                    <label for="sort" class="form-label">Sort by</label>
+                    <select th:field="*{sort}" class="form-select">
+                        <option th:each="s : ${sortOrders}" th:value="${s}"
+                                th:text="${s.name() == 'TITLE' ? 'Title (A–Z)' :
+                                          s.name() == 'PRICE_ASC' ? 'Price: low to high' :
+                                          s.name() == 'PRICE_DESC' ? 'Price: high to low' :
+                                          s.name() == 'NEWEST' ? 'Newest first' : 'Lowest stock first'}">Title</option>
+                    </select>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-bh"><i class="bi bi-funnel"></i> Apply filters</button>
+                    <a th:href="@{/books}" class="btn btn-link btn-sm">Clear all</a>
+                </div>
+            </form>
+        </aside>
+
+        <!-- results -->
+        <section class="col-lg-9">
+            <p class="text-body-secondary mb-2">
+                <strong th:text="${#lists.size(books)}">12</strong>
+                <span th:text="${#lists.size(books) == 1 ? 'book' : 'books'}">books</span>
+                <span th:unless="${criteria.empty}">match your filters</span>
+                <span th:if="${criteria.empty}">in the catalogue</span>
+            </p>
+
+            <div th:if="${#lists.isEmpty(books)}" class="bh-card p-5 text-center text-body-secondary">
+                <i class="bi bi-search fs-1 d-block mb-2"></i>
+                No books match these filters.
+            </div>
+
+            <div th:unless="${#lists.isEmpty(books)}" class="bh-card">
+                <div class="table-responsive">
+                    <table class="table table-hover bh-table">
+                        <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Provider</th>
+                            <th class="text-end">Price</th>
+                            <th class="text-end">Stock</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="b : ${books}">
+                            <td class="title-cell">
+                                <a th:href="@{/books/{id}(id=${b.bookId})}" th:text="${b.title}">Title</a><br>
+                                <small th:text="${b.authorNames.isEmpty() ? 'Unknown author' : b.authorNames}">Author</small>
+                            </td>
+                            <td><span class="bh-chip" th:text="${b.category}">Category</span></td>
+                            <td>
+                                <a th:if="${b.providerId}" th:href="@{/providers/{id}(id=${b.providerId})}"
+                                   th:text="${b.providerName}" class="text-decoration-none">Provider</a>
+                                <span th:unless="${b.providerId}" class="text-body-secondary">—</span>
+                            </td>
+                            <td class="text-end bh-price" th:text="'¥' + ${b.price}">¥50.00</td>
+                            <td class="text-end"><span th:replace="~{fragments/layout :: stockBadge(${b})}"></span></td>
+                            <td class="text-end text-nowrap">
+                                <a th:href="@{/books/{id}/edit(id=${b.bookId})}" class="btn btn-sm btn-outline-secondary"
+                                   title="Edit"><i class="bi bi-pencil"></i></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

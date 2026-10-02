@@ -1,0 +1,164 @@
+/* BookHub theme: deep teal + parchment, serif headings */
+:root {
+    --bh-ink: #1d2b2a;
+    --bh-teal: #0f5c56;
+    --bh-teal-dark: #0a403c;
+    --bh-teal-soft: #e3f0ee;
+    --bh-amber: #c7812a;
+    --bh-paper: #faf7f1;
+    --bh-line: #e6e0d4;
+
+    --bs-body-font-family: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+    --bs-body-bg: var(--bh-paper);
+    --bs-body-color: var(--bh-ink);
+    --bs-link-color-rgb: 15, 92, 86;
+    --bs-link-hover-color-rgb: 10, 64, 60;
+}
+
+h1, h2, h3, .bh-brand, .bh-serif {
+    font-family: 'Merriweather', Georgia, serif;
+}
+
+h1 { font-size: 1.75rem; font-weight: 900; }
+
+/* ---------- navigation ---------- */
+.bh-navbar {
+    background: linear-gradient(90deg, var(--bh-teal-dark), var(--bh-teal));
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .15);
+}
+.bh-navbar .nav-link { color: rgba(255, 255, 255, .78); font-weight: 600; }
+.bh-navbar .nav-link:hover { color: #fff; }
+.bh-navbar .nav-link.active {
+    color: #fff;
+    box-shadow: inset 0 -3px 0 var(--bh-amber);
+}
+.bh-brand { font-weight: 900; letter-spacing: .5px; }
+
+/* ---------- page header ---------- */
+.bh-page-head {
+    border-bottom: 1px solid var(--bh-line);
+    padding-bottom: .75rem;
+    margin-bottom: 1.5rem;
+}
+.bh-page-head .lead { font-size: 1rem; color: #5d6b69; margin: 0; }
+
+/* ---------- buttons ---------- */
+.btn-bh {
+    --bs-btn-bg: var(--bh-teal);
+    --bs-btn-border-color: var(--bh-teal);
+    --bs-btn-hover-bg: var(--bh-teal-dark);
+    --bs-btn-hover-border-color: var(--bh-teal-dark);
+    --bs-btn-active-bg: var(--bh-teal-dark);
+    --bs-btn-color: #fff;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-color: #fff;
+}
+.btn-outline-bh {
+    --bs-btn-color: var(--bh-teal);
+    --bs-btn-border-color: var(--bh-teal);
+    --bs-btn-hover-bg: var(--bh-teal);
+    --bs-btn-hover-border-color: var(--bh-teal);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-bg: var(--bh-teal-dark);
+    --bs-btn-active-color: #fff;
+}
+
+/* ---------- cards & panels ---------- */
+.bh-card {
+    background: #fff;
+    border: 1px solid var(--bh-line);
+    border-radius: .6rem;
+    box-shadow: 0 1px 2px rgba(29, 43, 42, .04);
+}
+.bh-card > .bh-card-title {
+    font-family: 'Merriweather', Georgia, serif;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: .85rem 1.1rem;
+    border-bottom: 1px solid var(--bh-line);
+    margin: 0;
+}
+
+.bh-stat {
+    border-left: 4px solid var(--bh-teal);
+    padding: 1rem 1.2rem;
+}
+.bh-stat.amber { border-left-color: var(--bh-amber); }
+.bh-stat .value { font-family: 'Merriweather', Georgia, serif; font-size: 1.8rem; font-weight: 900; line-height: 1.1; }
+.bh-stat .label { color: #6b7876; font-size: .85rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+
+/* ---------- tables ---------- */
+.bh-table { margin: 0; }
+.bh-table thead th {
+    background: var(--bh-teal-soft);
+    color: var(--bh-teal-dark);
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    border-bottom: 0;
+    white-space: nowrap;
+}
+.bh-table td { vertical-align: middle; }
+.bh-table .title-cell a { font-weight: 700; text-decoration: none; }
+.bh-table .title-cell small { color: #7a8583; }
+
+.bh-price { font-weight: 700; color: var(--bh-amber); white-space: nowrap; }
+.bh-badge-stock { background: var(--bh-teal-soft); color: var(--bh-teal-dark); }
+.bh-chip {
+    display: inline-block;
+    padding: .1rem .55rem;
+    border-radius: 999px;
+    background: #f1ece2;
+    color: #6a5b43;
+    font-size: .78rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* ---------- filter sidebar ---------- */
+.bh-filter label { font-weight: 600; font-size: .85rem; color: #4d5b59; }
+
+/* ---------- book detail "spine" ---------- */
+.bh-spine {
+    aspect-ratio: 2 / 3;
+    border-radius: .35rem .8rem .8rem .35rem;
+    background: linear-gradient(135deg, var(--bh-teal), var(--bh-teal-dark));
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.2rem 1rem 1rem 1.4rem;
+    box-shadow: inset 8px 0 0 rgba(0, 0, 0, .18), 0 8px 20px rgba(0, 0, 0, .15);
+}
+.bh-spine .t { font-family: 'Merriweather', Georgia, serif; font-weight: 900; font-size: 1.25rem; line-height: 1.25; }
+.bh-spine .a { font-size: .9rem; opacity: .85; }
+.bh-spine.cat-fiction { background: linear-gradient(135deg, #8a3b3b, #5a2323); }
+.bh-spine.cat-design { background: linear-gradient(135deg, #6b4e9b, #432f66); }
+.bh-spine.cat-data-science { background: linear-gradient(135deg, #b0701e, #7c4c10); }
+
+dl.bh-facts dt { font-weight: 600; color: #6b7876; font-size: .85rem; }
+dl.bh-facts dd { margin-bottom: .6rem; }
+
+/* ---------- avatars ---------- */
+.bh-avatar {
+    width: 2.6rem; height: 2.6rem;
+    border-radius: 50%;
+    background: var(--bh-teal-soft);
+    color: var(--bh-teal-dark);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+.bh-avatar.lg { width: 4.5rem; height: 4.5rem; font-size: 1.5rem; }
+
+/* ---------- category bar chart on dashboard ---------- */
+.bh-bar { height: .55rem; border-radius: 999px; background: var(--bh-teal-soft); overflow: hidden; }
+.bh-bar > span { display: block; height: 100%; background: var(--bh-teal); }
+
+.bh-footer { border-top: 1px solid var(--bh-line); font-size: .9rem; }
+
+.form-control:focus, .form-select:focus, .form-check-input:focus {
+    border-color: var(--bh-teal);
+    box-shadow: 0 0 0 .2rem rgba(15, 92, 86, .2);
+}
+.form-check-input:checked { background-color: var(--bh-teal); border-color: var(--bh-teal); }

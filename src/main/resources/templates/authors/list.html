@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Authors')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar('authors')}"></nav>
+
+<main class="container py-4">
+    <div class="bh-page-head d-flex flex-wrap justify-content-between align-items-end gap-3">
+        <div>
+            <h1 class="mb-1">Authors</h1>
+            <p class="lead">Everyone who has written a book in the catalogue.</p>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+            <form th:action="@{/authors}" method="get" class="d-flex gap-2" role="search">
+                <input type="search" name="q" th:value="${q}" class="form-control" placeholder="Search by name"
+                       aria-label="Search authors by name">
+                <button class="btn btn-outline-bh" type="submit"><i class="bi bi-search"></i></button>
+            </form>
+            <a th:href="@{/authors/new}" class="btn btn-bh"><i class="bi bi-person-plus"></i> New author</a>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: flash}"></div>
+
+    <p th:if="${q != null and !q.isBlank()}" class="text-body-secondary">
+        <span th:text="${#lists.size(authors)}">2</span> result(s) for "<strong th:text="${q}">q</strong>"
+        — <a th:href="@{/authors}">show all</a>
+    </p>
+
+    <div th:if="${#lists.isEmpty(authors)}" class="bh-card p-5 text-center text-body-secondary">
+        No authors found.
+    </div>
+
+    <div class="row g-3">
+        <div class="col-md-6 col-xl-4" th:each="a : ${authors}">
+            <div class="bh-card p-3 h-100 d-flex gap-3">
+                <span class="bh-avatar" th:text="${a.initials}">GH</span>
+                <div class="flex-grow-1 min-w-0">
+                    <a th:href="@{/authors/{id}(id=${a.authorId})}" class="fw-bold text-decoration-none fs-5"
+                       th:text="${a.fullName}">Name</a>
+                    <div class="small text-body-secondary mb-1">
+                        <span th:text="${a.nationality} ?: 'Nationality unknown'">Country</span> ·
+                        <span th:text="${a.bookCount} + (${a.bookCount == 1} ? ' book' : ' books')">3 books</span>
+                    </div>
+                    <p class="small mb-0 text-truncate" th:text="${a.biography} ?: 'No biography.'">Bio</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${authorId == null ? 'New author' : 'Edit author'})}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar('authors')}"></nav>
+
+<main class="container py-4" style="max-width: 720px">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/authors}">Authors</a></li>
+            <li class="breadcrumb-item active" aria-current="page" th:text="${authorId == null ? 'New author' : 'Edit'}">New</li>
+        </ol>
+    </nav>
+
+    <h1 class="mb-4" th:text="${authorId == null ? 'Add an author' : 'Edit author'}">Add an author</h1>
+
+    <form th:object="${form}"
+          th:action="${authorId == null} ? @{/authors} : @{/authors/{id}(id=${authorId})}"
+          th:method="${authorId == null} ? 'post' : 'put'"
+          class="bh-card p-4" novalidate>
+        <div class="row g-3">
+            <div class="col-md-7">
+                <label for="fullName" class="form-label fw-semibold">Full name *</label>
+                <input th:field="*{fullName}" class="form-control" th:errorclass="is-invalid">
+                <div class="invalid-feedback" th:errors="*{fullName}">error</div>
+            </div>
+            <div class="col-md-5">
+                <label for="nationality" class="form-label fw-semibold">Nationality</label>
+                <input th:field="*{nationality}" class="form-control" th:errorclass="is-invalid">
+                <div class="invalid-feedback" th:errors="*{nationality}">error</div>
+            </div>
+            <div class="col-12">
+                <label for="email" class="form-label fw-semibold">E-mail</label>
+                <input th:field="*{email}" type="email" class="form-control" th:errorclass="is-invalid">
+                <div class="invalid-feedback" th:errors="*{email}">error</div>
+            </div>
+            <div class="col-12">
+                <label for="biography" class="form-label fw-semibold">Biography</label>
+                <textarea th:field="*{biography}" rows="4" class="form-control" th:errorclass="is-invalid"></textarea>
+                <div class="invalid-feedback" th:errors="*{biography}">error</div>
+            </div>
+        </div>
+        <hr class="my-4">
+        <div class="d-flex justify-content-end gap-2">
+            <a th:href="${authorId == null} ? @{/authors} : @{/authors/{id}(id=${authorId})}" class="btn btn-outline-secondary">Cancel</a>
+            <button type="submit" class="btn btn-bh"><i class="bi bi-save"></i> Save</button>
+        </div>
+    </form>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

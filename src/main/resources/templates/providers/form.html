@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${providerId == null ? 'New provider' : 'Edit provider'})}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar('providers')}"></nav>
+
+<main class="container py-4" style="max-width: 720px">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/providers}">Providers</a></li>
+            <li class="breadcrumb-item active" aria-current="page" th:text="${providerId == null ? 'New provider' : 'Edit'}">New</li>
+        </ol>
+    </nav>
+
+    <h1 class="mb-4" th:text="${providerId == null ? 'Add a provider' : 'Edit provider'}">Add a provider</h1>
+
+    <form th:object="${form}"
+          th:action="${providerId == null} ? @{/providers} : @{/providers/{id}(id=${providerId})}"
+          th:method="${providerId == null} ? 'post' : 'put'"
+          class="bh-card p-4" novalidate>
+        <div class="row g-3">
+            <div class="col-12">
+                <label for="companyName" class="form-label fw-semibold">Company name *</label>
+                <input th:field="*{companyName}" class="form-control" th:errorclass="is-invalid">
+                <div class="invalid-feedback" th:errors="*{companyName}">error</div>
+            </div>
+            <div class="col-md-6">
+                <label for="phone" class="form-label fw-semibold">Phone</label>
+                <input th:field="*{phone}" class="form-control" th:errorclass="is-invalid">
+                <div class="invalid-feedback" th:errors="*{phone}">error</div>
+            </div>
+            <div class="col-md-6">
+                <label for="city" class="form-label fw-semibold">City</label>
+                <input th:field="*{city}" class="form-control" th:errorclass="is-invalid">
+                <div class="invalid-feedback" th:errors="*{city}">error</div>
+            </div>
+            <div class="col-12">
+                <label for="email" class="form-label fw-semibold">E-mail</label>
+                <input th:field="*{email}" type="email" class="form-control" th:errorclass="is-invalid">
+                <div class="invalid-feedback" th:errors="*{email}">error</div>
+            </div>
+        </div>
+        <hr class="my-4">
+        <div class="d-flex justify-content-end gap-2">
+            <a th:href="${providerId == null} ? @{/providers} : @{/providers/{id}(id=${providerId})}" class="btn btn-outline-secondary">Cancel</a>
+            <button type="submit" class="btn btn-bh"><i class="bi bi-save"></i> Save</button>
+        </div>
+    </form>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

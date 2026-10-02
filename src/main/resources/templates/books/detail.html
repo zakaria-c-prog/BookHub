@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${book.title})}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar('books')}"></nav>
+
+<main class="container py-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/books}">Catalogue</a></li>
+            <li class="breadcrumb-item active" aria-current="page" th:text="${book.title}">Title</li>
+        </ol>
+    </nav>
+
+    <div th:replace="~{fragments/layout :: flash}"></div>
+
+    <div class="row g-4">
+        <!-- cover -->
+        <div class="col-md-4 col-lg-3">
+            <div class="bh-spine"
+                 th:classappend="'cat-' + ${#strings.replace(#strings.toLowerCase(book.category), ' ', '-')}">
+                <div class="t" th:text="${book.title}">Title</div>
+                <div>
+                    <div class="a" th:text="${book.authorNames}">Author</div>
+                    <div class="a small mt-1" th:text="${book.publishYear}">2024</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- facts -->
+        <div class="col-md-8 col-lg-5">
+            <h1 th:text="${book.title}">Title</h1>
+            <p class="mb-3">
+                <span class="bh-chip" th:text="${book.category}">Category</span>
+                <span th:replace="~{fragments/layout :: stockBadge(${book})}"></span>
+            </p>
+            <p class="fs-3 bh-price mb-3" th:text="'¥' + ${book.price}">¥50.00</p>
+            <p th:text="${book.summary} ?: 'No summary yet.'" class="mb-4">Summary</p>
+
+            <dl class="bh-facts row">
+                <dt class="col-sm-4">Author(s)</dt>
+                <dd class="col-sm-8">
+                    <span th:if="${#lists.isEmpty(book.authors)}" class="text-body-secondary">None recorded</span>
+                    <th:block th:each="a, it : ${book.authors}">
+                        <a th:href="@{/authors/{id}(id=${a.authorId})}" th:text="${a.fullName}">Author</a><span th:unless="${it.last}">, </span>
+                    </th:block>
+                </dd>
+                <dt class="col-sm-4">Provider</dt>
+                <dd class="col-sm-8">
+                    <a th:if="${book.providerId}" th:href="@{/providers/{id}(id=${book.providerId})}"
+                       th:text="${book.providerName}">Provider</a>
+                    <span th:unless="${book.providerId}" class="text-body-secondary">None</span>
+                </dd>
+                <dt class="col-sm-4">ISBN</dt>
+                <dd class="col-sm-8 font-monospace" th:text="${book.isbn}">978...</dd>
+                <dt class="col-sm-4">Published</dt>
+                <dd class="col-sm-8" th:text="${book.publishYear} ?: '—'">2024</dd>
+                <dt class="col-sm-4">Added</dt>
+                <dd class="col-sm-8" th:text="${book.createdAt != null ? #temporals.format(book.createdAt, 'yyyy-MM-dd HH:mm') : '—'}">2024-01-01</dd>
+            </dl>
+
+            <div class="d-flex gap-2">
+                <a th:href="@{/books/{id}/edit(id=${book.bookId})}" class="btn btn-outline-bh">
+                    <i class="bi bi-pencil"></i> Edit details</a>
+                <form th:action="@{/books/{id}(id=${book.bookId})}" th:method="delete"
+                      th:attr="data-confirm='Delete &quot;' + ${book.title} + '&quot; permanently?'">
+                    <button type="submit" class="btn btn-outline-danger"><i class="bi bi-trash"></i> Delete</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- quick updates -->
+        <div class="col-lg-4">
+            <div class="bh-card mb-4">
+                <h2 class="bh-card-title"><i class="bi bi-box-seam"></i> Stock movement</h2>
+                <form th:action="@{/books/{id}/stock(id=${book.bookId})}" method="post" class="p-3">
+                    <p class="small text-body-secondary mb-2">
+                        Currently <strong th:text="${book.stock}">12</strong> copies on hand.
+                    </p>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text">Copies</span>
+                        <input type="number" name="copies" min="1" value="1" class="form-control" required>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="submit" name="action" value="restock" class="btn btn-bh flex-fill">
+                            <i class="bi bi-box-arrow-in-down"></i> Receive</button>
+                        <button type="submit" name="action" value="sell" class="btn btn-outline-bh flex-fill"
+                                th:disabled="${book.outOfStock}">
+                            <i class="bi bi-cart-check"></i> Sell</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="bh-card">
+                <h2 class="bh-card-title"><i class="bi bi-tag"></i> Pricing</h2>
+                <form th:action="@{/books/{id}/price(id=${book.bookId})}" method="post" class="p-3">
+                    <div class="btn-group w-100 mb-2" role="group" aria-label="Price change type">
+                        <input type="radio" class="btn-check" name="mode" id="modeSet" value="set" data-price-mode checked>
+                        <label class="btn btn-outline-bh" for="modeSet">Set price</label>
+                        <input type="radio" class="btn-check" name="mode" id="modeDiscount" value="discount" data-price-mode>
+                        <label class="btn btn-outline-bh" for="modeDiscount">Discount</label>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text" id="priceUnit">¥</span>
+                        <input type="number" name="value" id="priceValue" step="0.01" min="0.01"
+                               class="form-control" placeholder="new price" required>
+                    </div>
+                    <button type="submit" class="btn btn-bh w-100"><i class="bi bi-check2"></i> Update price</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Low-stock report')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar('books')}"></nav>
+
+<main class="container py-4">
+    <div class="bh-page-head">
+        <h1 class="mb-1">Low-stock report</h1>
+        <p class="lead" th:text="'Titles with ' + ${threshold} + ' or fewer copies left, emptiest first.'">Titles ...</p>
+    </div>
+
+    <div th:if="${#lists.isEmpty(books)}" class="bh-card p-5 text-center text-body-secondary">
+        <i class="bi bi-check2-all fs-1 d-block mb-2"></i> Nothing needs restocking.
+    </div>
+
+    <div th:unless="${#lists.isEmpty(books)}" class="bh-card">
+        <div class="table-responsive">
+            <table class="table bh-table">
+                <thead>
+                <tr><th>Title</th><th>Provider</th><th>Provider contact</th><th class="text-end">Stock</th><th></th></tr>
+                </thead>
+                <tbody>
+                <tr th:each="b : ${books}">
+                    <td class="title-cell"><a th:href="@{/books/{id}(id=${b.bookId})}" th:text="${b.title}">T</a>
+                        <br><small th:text="${b.isbn}">isbn</small></td>
+                    <td th:text="${b.providerName} ?: '—'">P</td>
+                    <td>
+                        <a th:if="${b.providerId}" th:href="@{/providers/{id}(id=${b.providerId})}">View provider</a>
+                    </td>
+                    <td class="text-end"><span th:replace="~{fragments/layout :: stockBadge(${b})}"></span></td>
+                    <td class="text-end">
+                        <a th:href="@{/books/{id}(id=${b.bookId})}" class="btn btn-sm btn-bh">
+                            <i class="bi bi-box-arrow-in-down"></i> Restock</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

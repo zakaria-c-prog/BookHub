@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Dashboard')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar('home')}"></nav>
+
+<main class="container py-4">
+    <div class="bh-page-head d-flex flex-wrap justify-content-between align-items-end gap-3">
+        <div>
+            <h1 class="mb-1">Dashboard</h1>
+            <p class="lead" th:text="#{app.tagline}">Catalogue management for an online bookstore</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a th:href="@{/books/new}" class="btn btn-bh"><i class="bi bi-plus-lg"></i> New book</a>
+            <a th:href="@{/books}" class="btn btn-outline-bh"><i class="bi bi-search"></i> Search catalogue</a>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: flash}"></div>
+
+    <!-- key figures -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-lg-3">
+            <a th:href="@{/books}" class="text-decoration-none text-reset">
+                <div class="bh-card bh-stat h-100">
+                    <div class="value" th:text="${stats.bookCount}">12</div>
+                    <div class="label">Titles</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-lg-3">
+            <a th:href="@{/authors}" class="text-decoration-none text-reset">
+                <div class="bh-card bh-stat h-100">
+                    <div class="value" th:text="${stats.authorCount}">6</div>
+                    <div class="label">Authors</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-lg-3">
+            <a th:href="@{/providers}" class="text-decoration-none text-reset">
+                <div class="bh-card bh-stat h-100">
+                    <div class="value" th:text="${stats.providerCount}">3</div>
+                    <div class="label">Providers</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="bh-card bh-stat amber h-100">
+                <div class="value" th:text="'¥' + ${#numbers.formatDecimal(stats.inventoryValue, 1, 'COMMA', 0, 'POINT')}">¥7,000</div>
+                <div class="label" th:text="${stats.unitsInStock} + ' copies in stock'">145 copies in stock</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- low stock -->
+        <div class="col-lg-7">
+            <div class="bh-card h-100">
+                <h2 class="bh-card-title d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-exclamation-diamond text-warning"></i> Needs restocking</span>
+                    <a th:href="@{/books/low-stock}" class="small fw-semibold">Full report</a>
+                </h2>
+                <div th:if="${#lists.isEmpty(lowStock)}" class="p-4 text-center text-body-secondary">
+                    Every title is well stocked.
+                </div>
+                <div class="table-responsive" th:unless="${#lists.isEmpty(lowStock)}">
+                    <table class="table bh-table">
+                        <thead><tr><th>Title</th><th>Provider</th><th class="text-end">Stock</th></tr></thead>
+                        <tbody>
+                        <tr th:each="b : ${lowStock}">
+                            <td class="title-cell"><a th:href="@{/books/{id}(id=${b.bookId})}" th:text="${b.title}">Title</a></td>
+                            <td th:text="${b.providerName} ?: '—'">Provider</td>
+                            <td class="text-end"><span th:replace="~{fragments/layout :: stockBadge(${b})}"></span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- categories -->
+        <div class="col-lg-5">
+            <div class="bh-card h-100">
+                <h2 class="bh-card-title"><i class="bi bi-bookmarks"></i> Titles by category</h2>
+                <div class="p-3">
+                    <div th:each="c : ${stats.categories}" class="mb-3">
+                        <div class="d-flex justify-content-between small mb-1">
+                            <a th:href="@{/books(category=${c.category})}" class="fw-semibold text-decoration-none"
+                               th:text="${c.category}">Fiction</a>
+                            <span class="text-body-secondary" th:text="${c.titles} + ' titles · ' + ${c.units} + ' copies'">2 titles</span>
+                        </div>
+                        <div class="bh-bar">
+                            <span th:style="'width:' + ${stats.bookCount == 0 ? 0 : c.titles * 100 / stats.bookCount} + '%'"></span>
+                        </div>
+                    </div>
+                    <p th:if="${#lists.isEmpty(stats.categories)}" class="text-body-secondary m-0">No books yet.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- newest -->
+        <div class="col-12">
+            <div class="bh-card">
+                <h2 class="bh-card-title"><i class="bi bi-stars"></i> Recently added</h2>
+                <div class="table-responsive">
+                    <table class="table bh-table">
+                        <thead><tr><th>Title</th><th>Author(s)</th><th>Category</th><th class="text-end">Price</th></tr></thead>
+                        <tbody>
+                        <tr th:each="b : ${recent}">
+                            <td class="title-cell"><a th:href="@{/books/{id}(id=${b.bookId})}" th:text="${b.title}">Title</a></td>
+                            <td th:text="${b.authorNames} ?: '—'">Author</td>
+                            <td><span class="bh-chip" th:text="${b.category}">Cat</span></td>
+                            <td class="text-end bh-price" th:text="'¥' + ${b.price}">¥50.00</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

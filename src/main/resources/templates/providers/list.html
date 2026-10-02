@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Providers')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar('providers')}"></nav>
+
+<main class="container py-4">
+    <div class="bh-page-head d-flex flex-wrap justify-content-between align-items-end gap-3">
+        <div>
+            <h1 class="mb-1">Providers</h1>
+            <p class="lead">Companies that supply books to the store.</p>
+        </div>
+        <a th:href="@{/providers/new}" class="btn btn-bh"><i class="bi bi-building-add"></i> New provider</a>
+    </div>
+
+    <div th:replace="~{fragments/layout :: flash}"></div>
+
+    <div th:if="${#lists.isEmpty(providers)}" class="bh-card p-5 text-center text-body-secondary">
+        No providers yet.
+    </div>
+
+    <div th:unless="${#lists.isEmpty(providers)}" class="bh-card">
+        <div class="table-responsive">
+            <table class="table table-hover bh-table">
+                <thead>
+                <tr><th>Company</th><th>City</th><th>Phone</th><th>E-mail</th><th class="text-end">Titles</th><th></th></tr>
+                </thead>
+                <tbody>
+                <tr th:each="p : ${providers}">
+                    <td class="title-cell"><a th:href="@{/providers/{id}(id=${p.providerId})}" th:text="${p.companyName}">Co</a></td>
+                    <td th:text="${p.city} ?: '—'">City</td>
+                    <td class="text-nowrap" th:text="${p.phone} ?: '—'">Phone</td>
+                    <td>
+                        <a th:if="${p.email}" th:href="'mailto:' + ${p.email}" th:text="${p.email}">mail</a>
+                        <span th:unless="${p.email}">—</span>
+                    </td>
+                    <td class="text-end"><span class="badge rounded-pill bh-badge-stock" th:text="${p.bookCount}">4</span></td>
+                    <td class="text-end">
+                        <a th:href="@{/providers/{id}/edit(id=${p.providerId})}" class="btn btn-sm btn-outline-secondary"
+                           title="Edit"><i class="bi bi-pencil"></i></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>
