@@ -28,13 +28,28 @@ document.querySelectorAll('[data-price-mode]').forEach(function (radio) {
 // ---------- UI effects ----------
 (function () {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const finePointer = window.matchMedia('(pointer: fine)').matches;
 
-    // Staggered entrance for the page header, cards and alerts
-    document.querySelectorAll('main .bh-page-head, main .bh-card, main > h2')
-        .forEach(function (el, i) {
+    // Sections fade and rise into place: at once if visible, otherwise as they scroll into view
+    const revealables = document.querySelectorAll('main .bh-page-head, main .bh-card, main > h2, main .row > [class*="col"] > .bh-card');
+    if ('IntersectionObserver' in window && !reduceMotion) {
+        let batch = 0;
+        const observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.style.setProperty('--i', Math.min(batch++, 10));
+                    entry.target.classList.add('in');
+                    observer.unobserve(entry.target);
+                }
+            });
+            batch = 0;
+        }, { threshold: 0.08 });
+        revealables.forEach(function (el) {
+            if (el.hasAttribute('data-tilt')) return; // their transform belongs to the tilt
             el.classList.add('bh-reveal');
-            el.style.setProperty('--i', Math.min(i, 12));
+            observer.observe(el);
         });
+    }
 
     // Navbar gets a stronger background once the page scrolls
     const nav = document.querySelector('.bh-navbar');
@@ -42,6 +57,41 @@ document.querySelectorAll('[data-price-mode]').forEach(function (radio) {
         const onScroll = function () { nav.classList.toggle('scrolled', window.scrollY > 8); };
         window.addEventListener('scroll', onScroll, { passive: true });
         onScroll();
+    }
+
+    // Pointer-driven 3D tilt: [data-tilt] cards lean gently, [data-book3d] books turn further
+    function tilt(el, maxX, maxY, glare) {
+        el.addEventListener('pointermove', function (event) {
+            const box = el.getBoundingClientRect();
+            const x = (event.clientX - box.left) / box.width;
+            const y = (event.clientY - box.top) / box.height;
+            el.classList.add('tracking');
+            el.style.setProperty('--ry', ((x - 0.5) * maxY).toFixed(2) + 'deg');
+            el.style.setProperty('--rx', ((0.5 - y) * maxX).toFixed(2) + 'deg');
+            if (glare) {
+                el.style.setProperty('--gx', (x * 100).toFixed(1) + '%');
+                el.style.setProperty('--gy', (y * 100).toFixed(1) + '%');
+            }
+        });
+        el.addEventListener('pointerleave', function () {
+            el.classList.remove('tracking');
+            el.style.setProperty('--rx', '0deg');
+            el.style.setProperty('--ry', '0deg');
+        });
+    }
+    if (finePointer && !reduceMotion) {
+        document.querySelectorAll('[data-tilt]').forEach(function (el) { tilt(el, 10, 12, true); });
+        document.querySelectorAll('[data-book3d]').forEach(function (el) { tilt(el, 12, 26, false); });
+    }
+
+    // Shelf: show the title of the book under the pointer
+    const caption = document.querySelector('[data-shelf-caption]');
+    if (caption) {
+        const idle = caption.textContent;
+        document.querySelectorAll('.bh-shelf a').forEach(function (link) {
+            link.addEventListener('pointerenter', function () { caption.textContent = link.dataset.caption; caption.style.color = '#fff'; });
+            link.addEventListener('pointerleave', function () { caption.textContent = idle; caption.style.color = ''; });
+        });
     }
 
     // Count the dashboard numbers up from zero, keeping any prefix like "¥"
@@ -55,7 +105,7 @@ document.querySelectorAll('[data-price-mode]').forEach(function (radio) {
             const format = function (n) {
                 return prefix + n.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) + suffix;
             };
-            const duration = 1200;
+            const duration = 1400;
             let start = null;
             const step = function (time) {
                 if (start === null) start = time;

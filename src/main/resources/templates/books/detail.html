@@ -17,16 +17,9 @@
     <div class="row g-4">
         <!-- cover -->
         <div class="col-md-4 col-lg-3">
-            <div th:if="${@covers.has(book.bookId)}" class="bh-spine has-art">
-                <img th:src="@{/covers/{id}.svg(id=${book.bookId})}" th:alt="'Cover of ' + ${book.title}">
-            </div>
-            <div th:unless="${@covers.has(book.bookId)}" class="bh-spine"
-                 th:classappend="'cat-' + ${#strings.replace(#strings.toLowerCase(book.category), ' ', '-')}">
-                <div class="t" th:text="${book.title}">Title</div>
-                <div>
-                    <div class="a" th:text="${book.authorNames}">Author</div>
-                    <div class="a small mt-1" th:text="${book.publishYear}">2024</div>
-                </div>
+            <div class="pt-2 pb-4">
+                <div th:replace="~{fragments/layout :: book3d(${book}, true)}"></div>
+                <p class="text-center small text-body-secondary mt-4 mb-0 d-none d-md-block">Hover to open the book</p>
             </div>
         </div>
 

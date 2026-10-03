@@ -76,6 +76,35 @@
           th:text="${book.stock} + ' in stock'">12 in stock</span>
 </span>
 
+<!-- A 3D book: cover art (or a styled face), spine, page block and back.
+     open = true adds an inside page and lets the cover swing open on hover. -->
+<div th:fragment="book3d(b, open)" class="book3d" th:classappend="${open} ? 'can-open'" data-book3d
+     th:with="art=${@covers.has(b.bookId)}, coverUrl=@{/covers/{id}.svg(id=${b.bookId})}"
+     th:style="${art} ? |--cover: url('${coverUrl}')| : ''">
+    <div class="book3d-body">
+        <div class="book3d-back"></div>
+        <div class="book3d-pages"></div>
+        <div class="book3d-inside" th:if="${open}">
+            <span class="ex">BookHub</span>
+            <p class="ti" th:text="${b.title}">Title</p>
+            <p class="su" th:text="${b.summary}">Summary</p>
+            <span class="yr" th:text="${b.authorNames} + (${b.publishYear} != null ? ' · ' + ${b.publishYear} : '')">Author · 2024</span>
+        </div>
+        <div class="book3d-spine"><span th:text="${b.title}">Title</span></div>
+        <div class="book3d-cover">
+            <div class="book3d-front">
+                <img th:if="${art}" th:src="${coverUrl}" th:alt="'Cover of ' + ${b.title}">
+                <div th:unless="${art}" class="book3d-plain"
+                     th:classappend="'cat-' + ${#strings.replace(#strings.toLowerCase(b.category), ' ', '-')}">
+                    <div class="t" th:text="${b.title}">Title</div>
+                    <div class="a" th:text="${b.authorNames}">Author</div>
+                </div>
+            </div>
+            <div class="book3d-cover-in"></div>
+        </div>
+    </div>
+</div>
+
 <footer th:fragment="footer" class="bh-footer mt-5">
     <div class="container d-flex flex-wrap justify-content-between gap-2 py-4">
         <span><i class="bi bi-book-half"></i> BookHub &mdash; Software Design course project, NJUST</span>

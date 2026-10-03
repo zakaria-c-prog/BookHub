@@ -22,7 +22,7 @@
     <div class="row g-3 mb-4">
         <div class="col-6 col-lg-3">
             <a th:href="@{/books}" class="text-decoration-none text-reset">
-                <div class="bh-card bh-stat h-100">
+                <div class="bh-card bh-stat h-100" data-tilt>
                     <div class="value" th:text="${stats.bookCount}">12</div>
                     <div class="label">Titles</div>
                 </div>
@@ -30,7 +30,7 @@
         </div>
         <div class="col-6 col-lg-3">
             <a th:href="@{/authors}" class="text-decoration-none text-reset">
-                <div class="bh-card bh-stat h-100">
+                <div class="bh-card bh-stat h-100" data-tilt>
                     <div class="value" th:text="${stats.authorCount}">6</div>
                     <div class="label">Authors</div>
                 </div>
@@ -38,18 +38,33 @@
         </div>
         <div class="col-6 col-lg-3">
             <a th:href="@{/providers}" class="text-decoration-none text-reset">
-                <div class="bh-card bh-stat h-100">
+                <div class="bh-card bh-stat h-100" data-tilt>
                     <div class="value" th:text="${stats.providerCount}">3</div>
                     <div class="label">Providers</div>
                 </div>
             </a>
         </div>
         <div class="col-6 col-lg-3">
-            <div class="bh-card bh-stat amber h-100">
+            <div class="bh-card bh-stat amber h-100" data-tilt>
                 <div class="value" th:text="'¥' + ${#numbers.formatDecimal(stats.inventoryValue, 1, 'COMMA', 0, 'POINT')}">¥7,000</div>
                 <div class="label" th:text="${stats.unitsInStock} + ' copies in stock'">145 copies in stock</div>
             </div>
         </div>
+    </div>
+
+    <!-- newest titles as a 3D bookshelf -->
+    <div class="bh-card mb-4" th:unless="${#lists.isEmpty(recent)}">
+        <h2 class="bh-card-title d-flex justify-content-between align-items-center">
+            <span><i class="bi bi-bookshelf"></i> On the shelf</span>
+            <span class="small text-body-secondary fw-normal" style="font-family: var(--bs-body-font-family)">Newest arrivals</span>
+        </h2>
+        <div class="bh-shelf">
+            <a th:each="b : ${recent}" th:href="@{/books/{id}(id=${b.bookId})}" th:title="${b.title}" th:attr="data-caption=${b.title}">
+                <div th:replace="~{fragments/layout :: book3d(${b}, false)}"></div>
+            </a>
+        </div>
+        <div class="bh-shelf-plank"></div>
+        <div class="bh-shelf-caption pb-3" data-shelf-caption>Point at a book</div>
     </div>
 
     <div class="row g-4">
